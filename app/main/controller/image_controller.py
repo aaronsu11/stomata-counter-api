@@ -6,19 +6,12 @@ from flask import request
 from flask_restx import Resource
 
 from ..util.dto import ImageDto
-from ..service.image_service import MRCNNStomataDetector
+from ..service.image_service import process_image, process_image_batch, list_images
 
 # using the "image" namespace
 api = ImageDto.api
 _image = ImageDto.image
 _image_data = ImageDto.image_data
-
-
-detector = MRCNNStomataDetector()
-
-
-def dummy(data='google.com'):
-    return 'google.com'
 
 
 @api.route('/')
@@ -27,7 +20,7 @@ class Image(Resource):
     @api.marshal_list_with(_image, envelope='image')
     def get(self):
         """Get the URL of processed image"""
-        return dummy()
+        return "s3 bucket list:"
 
     @api.response(201, 'Image successfully processed.', _image_data)
     @api.doc('process an image given its url')
@@ -35,4 +28,14 @@ class Image(Resource):
     def post(self):
         """Process an image given the URL from S3"""
         data = request.json
-        return detector.process_image("dummy")
+        # url = data["url"]
+        url = "s3://ainz..."
+        return process_image(url)
+
+
+@api.route('/list')
+class ImageList(Resource):
+    @api.doc('DEV - get the list of images in the default bucket')
+    def get(self):
+        """List all registered users"""
+        return list_images()
