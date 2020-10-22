@@ -5,6 +5,7 @@ function created for hosting on AWS services
 """
 
 from matplotlib import pyplot as plt
+# from keras import backend as K
 from mrcnn import model as modellib, utils
 from mrcnn import visualize
 from mrcnn.config import Config
@@ -67,6 +68,7 @@ class MRCNNStomataDetector(object):
         self.model.load_weights(STOMATA_WEIGHTS_PATH, by_name=True)
         # solution for ValueError: https://github.com/matterport/Mask_RCNN/issues/600
         self.model.keras_model._make_predict_function()
+        # self.graph = K.get_session().graph
 
     def process_image(self, image_bytes):
         """use the MRCNN model to process one image
@@ -89,8 +91,12 @@ class MRCNNStomataDetector(object):
         """
         image_np = cv2.imdecode(np.asarray(
             bytearray(image_bytes)), cv2.IMREAD_COLOR)
+        # Solution for Keras multi-threads/processes bug:
+        # https://github.com/keras-team/keras/issues/2397#issuecomment-306687500
+        # with self.graph.as_default():
         labeled_image, num_stomata, scores_np, areas = run_inference(
             self.model, image_np)
+        # K.clear_session()
         image_bytes = cv2.imencode('.jpg', labeled_image)[1].tobytes()
         scores = scores_np.tolist()
         return image_bytes, num_stomata, scores, areas
