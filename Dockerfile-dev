@@ -1,3 +1,0 @@
-FROM flask-test:latest
-
-COPY ./uwsgi.ini /app/uwsgi.ini

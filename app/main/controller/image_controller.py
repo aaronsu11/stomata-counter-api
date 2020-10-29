@@ -14,13 +14,13 @@ _image = ImageDto.image
 _image_data = ImageDto.image_data
 
 
-@api.route('/')
+@api.route('/detect')
 class Image(Resource):
     @api.doc('get the processed image')
     @api.marshal_list_with(_image, envelope='image')
     def get(self):
         """Get the URL of processed image"""
-        return "s3 bucket list:"
+        return "s3://ainz11-test/..."
 
     @api.response(201, 'Image successfully processed.', _image_data)
     @api.doc('process an image given its url')
