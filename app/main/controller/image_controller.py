@@ -27,10 +27,9 @@ class Image(Resource):
     @api.expect(_image, validate=True)
     def post(self):
         """Process an image given the URL from S3"""
-        data = request.json
-        # url = data["url"]
-        url = "s3://ainz..."
-        return process_image(url)
+        meta = request.json
+        image_name = meta["name"]
+        return process_image(image_name)
 
 
 @api.route('/list')

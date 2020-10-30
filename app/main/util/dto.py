@@ -19,7 +19,7 @@ class ImageDto:
     api = Namespace('image', description='image related operations')
     image = api.model('image', {
         'name': fields.String(required=True, description='image name'),
-        'url': fields.String(required=True, description='image URL'),
+        # 'url': fields.String(required=True, description='image URL'),
     })
     image_data = api.model('image_data', {
         'num_stomata': fields.Integer(required=True, description='number of stomata detected'),

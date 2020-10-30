@@ -23,6 +23,7 @@ defusedxml==0.6.0
 docutils==0.16
 entrypoints==0.3
 Flask==1.1.2
+Flask-Cors==3.0.9
 flask-restx==0.2.0
 Flask-Script==2.0.6
 Flask-Testing==0.8.0
@@ -56,8 +57,7 @@ Keras-Preprocessing==1.1.2
 kiwisolver==1.2.0
 Markdown==3.3.1
 MarkupSafe==1.1.1
-# mask-rcnn==2.1
-mask-rcnn-12rics
+mask-rcnn-12rics==0.2.3
 matplotlib==3.3.0
 mistune==0.8.4
 nbclient==0.5.0
